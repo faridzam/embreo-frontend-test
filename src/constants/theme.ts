@@ -18,6 +18,11 @@ export const theme = createTheme({
       main: '#F15858',
       light: '#f37878',
     },
+    success: {
+      dark: '#4f9d69',
+      main: '#68d89b',
+      light: '#8dffcd',
+    },
   },
   typography: {
     fontFamily: 'Montserrat Variable',

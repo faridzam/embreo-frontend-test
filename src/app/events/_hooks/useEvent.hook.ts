@@ -1,5 +1,5 @@
 import { apiRequest } from '@/libs/axios/apiRequest'
-import { addEvent } from '@/libs/redux/features/events/eventSlice'
+import { addEvent, approveEvent, rejectEvent } from '@/libs/redux/features/events/eventSlice'
 import { Company, UpdateEvent } from '@/types/events'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -53,10 +53,30 @@ const useEvent = () => {
     }
   }
 
-  const handleUpdateUser = (data: UpdateEvent) => {
+  const handleApproveEvent = async (data: UpdateEvent) => {
     try {
-      // dispatch(updateEvent(data))
-      setModalOpen({})
+      const response = await apiRequest.patch('/event/approve', {
+        event_id: data.event_id,
+        remarks: data.remarks
+      })
+      if (response.status === 200) {
+        dispatch(approveEvent(response.data.data))
+        setModalOpen({})
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleRejectEvent = async (data: UpdateEvent) => {
+    try {
+      const response = await apiRequest.patch('/event/reject', {
+        event_id: data.event_id,
+        remarks: data.remarks
+      })
+      if (response.status === 200) {
+        dispatch(rejectEvent(response.data.data))
+        setModalOpen({})
+      }
     } catch (error) {
       console.log(error)
     }
@@ -65,11 +85,12 @@ const useEvent = () => {
   return {
     modalOpen,
     vendors,
+    getVendors,
     handleOpenModal,
     handleCloseModal,
     handleCreateEvent,
-    handleUpdateUser,
-    getVendors,
+    handleApproveEvent,
+    handleRejectEvent,
   }
 }
 

@@ -1,4 +1,4 @@
-import checkAuth from '@/middlewares/CheckAuth';
+import checkAuth from '@/utils/CheckAuth';
 import { delay } from '@/utils/helper';
 import { lazy } from 'react';
 import { Navigate, RouteObject } from 'react-router-dom';

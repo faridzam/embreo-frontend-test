@@ -17,7 +17,7 @@ const useLogin = () => {
       })
   
       if (response.status === 200 || response.status === 201) {
-        dispatch(setToken(response.data.data.token))
+        dispatch(setToken(response.data.data))
         window.location.href = '/';
       }
     } catch (error) {

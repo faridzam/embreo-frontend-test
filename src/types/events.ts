@@ -13,6 +13,16 @@ export interface Company {
   id:   number;
   name: string;
 }
+export interface Role {
+  id:   number;
+  name: string;
+}
+export interface User {
+  id:   number;
+  role_id: number;
+  company_id: number;
+  name: string;
+}
 
 export interface Vendor {
   name:        string;

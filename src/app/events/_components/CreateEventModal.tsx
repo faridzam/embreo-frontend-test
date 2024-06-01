@@ -4,7 +4,6 @@ import TextInput from '@/components/inputs/TextInput'
 import { initialUpdateEvent } from '@/constants/event'
 import { UpdateEvent } from '@/types/events'
 import { setNestedState } from '@/utils/stateHelper'
-import { capitalizeFirstLetter } from '@/utils/strings'
 import {
   Button,
   Dialog,
@@ -18,26 +17,22 @@ import Grid2 from '@mui/material/Unstable_Grid2'
 import { ChangeEvent, useEffect, useState } from 'react'
 import useEvent from '../_hooks/useEvent.hook'
 
-interface IEventModalProps {
+interface ICreateEventModalProps {
   id: string
-  type?: 'create' | 'update'
   open: boolean | undefined
   data?: UpdateEvent
   onClose: (id: string) => void
-  onCreate?: (data: UpdateEvent) => void
-  onUpdate?: (data: UpdateEvent) => void
+  onCreate: (data: UpdateEvent) => void
   [key: string]: any
 }
 
-const EventModal = (props: IEventModalProps) => {
+const CreateEventModal = (props: ICreateEventModalProps) => {
   const {
     id,
-    type = 'create',
     open,
     data = initialUpdateEvent,
     onClose,
     onCreate = () => {},
-    onUpdate = () => {},
     ...restProps
   } = props
 
@@ -47,17 +42,7 @@ const EventModal = (props: IEventModalProps) => {
   const {vendors, getVendors} = useEvent()
 
   const onSubmit = () => {
-    switch (type) {
-      case 'create':
-        onCreate(form)
-        break
-      case 'update':
-        onUpdate(form)
-        break
-
-      default:
-        break
-    }
+    onCreate(form)
   }
 
   const [form, setForm] = useState<UpdateEvent>(() => data)
@@ -103,7 +88,7 @@ const EventModal = (props: IEventModalProps) => {
         }}
       >
         <DialogTitle variant="h4">
-          {`${capitalizeFirstLetter(type)} Event ${data.name || ''}`}
+          Create Event
         </DialogTitle>
         <DialogContent>
           <Grid2 container direction={'row'} spacing={3}>
@@ -168,4 +153,4 @@ const EventModal = (props: IEventModalProps) => {
   )
 }
 
-export default EventModal
+export default CreateEventModal

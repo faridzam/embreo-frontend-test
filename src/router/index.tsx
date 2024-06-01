@@ -1,4 +1,4 @@
-import checkAuth from '@/middlewares/CheckAuth'
+import checkAuth from '@/utils/CheckAuth'
 import { createBrowserRouter } from 'react-router-dom'
 import PrivateRoutes from './PrivateRoutes'
 import PublicRoutes from './PublicRoutes'

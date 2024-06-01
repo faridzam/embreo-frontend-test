@@ -1,10 +1,10 @@
 import { colors } from '@/constants/colors'
 import { setPage, setRowsPerPage } from '@/libs/redux/features/events/eventSlice'
 import { useAppDispatch, useAppSelector } from '@/libs/redux/hooks'
-import { RootState } from '@/libs/redux/store'
-import { Description, Edit } from '@mui/icons-material'
+import store, { RootState } from '@/libs/redux/store'
+import { Check, Close } from '@mui/icons-material'
 import {
-  IconButton,
+  Fab,
   Paper,
   Table,
   TableBody,
@@ -15,10 +15,12 @@ import {
   TableRow,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from '@mui/material'
+import dayjs from 'dayjs'
 import { Fragment } from 'react/jsx-runtime'
 import useEvent from '../_hooks/useEvent.hook'
+import UpdateEventModal from './UpdateEventModal'
 
 interface Column {
   id: 'id' | 'company' | 'name' | 'location' | 'dates' | 'vendors' | 'created_at' | 'action';
@@ -45,7 +47,11 @@ const EventTable = () => {
   const smallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const {
+    modalOpen,
     handleOpenModal,
+    handleCloseModal,
+    handleApproveEvent,
+    handleRejectEvent,
   } = useEvent()
 
   const events = useAppSelector((state: RootState) => state.event.events)
@@ -107,12 +113,36 @@ const EventTable = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
                   return (
-                    <Fragment key={`user-${row.id}`}>
+                    <Fragment key={`event-${row.id}`}>
+                      {
+                        store.getState().auth.role.id === 2 && (
+                          <>     
+                            <UpdateEventModal
+                              data-testid={`modal-update-approve-${row.id}`}
+                              id={`modal-update-approve-${row.id}`}
+                              type='approve'
+                              data={row}
+                              open={modalOpen[`modal-update-approve-${row.id}`] === true}
+                              onClose={() => handleCloseModal(`modal-update-approve-${row.id}`)}
+                              onApprove={(data) => handleApproveEvent(data)}
+                            />
+                            <UpdateEventModal
+                              data-testid={`modal-update-reject-${row.id}`}
+                              id={`modal-update-reject-${row.id}`}
+                              type='reject'
+                              data={row}
+                              open={modalOpen[`modal-update-reject-${row.id}`] === true}
+                              onClose={() => handleCloseModal(`modal-update-reject-${row.id}`)}
+                              onReject={(data) => handleRejectEvent(data)}
+                            />
+                          </>
+                        )
+                      }
                       <TableRow
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        data-testid={`user-row-${row.id}`}
+                        data-testid={`event-row-${row.id}`}
                       >
                         <TableCell align={'center'}>
                           <Typography variant="body2">{row.id}</Typography>
@@ -129,7 +159,7 @@ const EventTable = () => {
                         <TableCell align={'left'}>
                           {
                             row.dates.map((date) => (
-                              <Typography variant="body2">{Date.parse(date)}</Typography>
+                              <Typography variant="body2">{dayjs(date).format('YYYY-MM-DD')}</Typography>
                             ))
                           }
                         </TableCell>
@@ -141,10 +171,10 @@ const EventTable = () => {
                           }
                         </TableCell>
                         <TableCell align={'left'}>
-                          <Typography variant="body2">{Date.parse(row.created_at).toLocaleString('id')}</Typography>
+                          <Typography variant="body2">{dayjs(row.created_at).format('YYYY-MM-DD')}</Typography>
                         </TableCell>
                         <TableCell
-                          align={'left'}
+                          align={'center'}
                           sx={
                             !smallScreen
                               ? {
@@ -156,18 +186,30 @@ const EventTable = () => {
                               : {}
                           }
                         >
-                          <IconButton
-                            data-testid={`detail-user-button-${row.id}`}
-                            onClick={() => handleOpenModal(`modal-detail-${row.id}`)}
-                          >
-                            <Description />
-                          </IconButton>
-                          <IconButton
-                            data-testid={`update-user-button-${row.id}`}
-                            onClick={() => handleOpenModal(`modal-update-${row.id}`)}
-                          >
-                            <Edit />
-                          </IconButton>
+                          {
+                            store.getState().auth.role.id === 2 && (
+                              <>
+                                <Fab
+                                  size='medium'
+                                  color='error'
+                                  sx={{marginX: '8px'}}
+                                  data-testid={`reject-event-button-${row.id}`}
+                                  onClick={() => handleOpenModal(`modal-update-reject-${row.id}`)}
+                                >
+                                  <Close sx={{color: colors.white.light}} />
+                                </Fab>
+                                <Fab
+                                  size='medium'
+                                  color='success'
+                                  sx={{marginX: '8px'}}
+                                  data-testid={`approve-event-button-${row.id}`}
+                                  onClick={() => handleOpenModal(`modal-update-approve-${row.id}`)}
+                                >
+                                  <Check sx={{color: colors.white.light}} />
+                                </Fab>
+                              </>
+                            )
+                          }
                         </TableCell>
                       </TableRow>
                     </Fragment>

@@ -14,6 +14,11 @@ export const colors = {
     main: '#F15858',
     light: '#f37878',
   },
+  success: {
+    dark: '#4f9d69',
+    main: '#68d89b',
+    light: '#8dffcd',
+  },
   black: {
     main: '#444',
     light: '#666',
