@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+# EMBREO Frontend Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
 
-Currently, two official plugins are available:
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+List the key features of app:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Get users from dummy api
+- Create user
+- Update user
+- Delete user
 
-- Configure the top-level `parserOptions` property like this:
+## Screenshots
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+![Image 1](./src/assets/screenshot/screenshot_1.png)
+![Image 2](./src/assets/screenshot/screenshot_2.png)
+![Image 3](./src/assets/screenshot/screenshot_3.png)
+![Image 4](./src/assets/screenshot/screenshot_4.png)
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Prerequisites
+
+- Node.js (version 20.10.0)
+- npm (version 10.2.3)
+
+## Installation
+
+How to install and set up app on local
+
+1. Clone the repository: `git clone https://github.com/faridzam/embreo-frontend-test.git`
+2. Navigate to the project directory: `cd embreo-frontend-test`
+3. Install dependencies: `npm install`
+
+## Usage
+
+- To start the app in development mode: `npm run dev`
+- To build the app: `npm run build`
+- To run the app: `npm run preview`
+- To run prettier : `npm run format`
+- To run unit test : `npm run test`
