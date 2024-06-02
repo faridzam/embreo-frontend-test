@@ -1,5 +1,6 @@
 import { apiRequest } from '@/libs/axios/apiRequest'
 import { addEvent, approveEvent, rejectEvent } from '@/libs/redux/features/events/eventSlice'
+import store from '@/libs/redux/store'
 import { Company, UpdateEvent } from '@/types/events'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -60,7 +61,7 @@ const useEvent = () => {
         remarks: data.remarks
       })
       if (response.status === 200) {
-        dispatch(approveEvent(response.data.data))
+        dispatch(approveEvent({...response.data.data, id: data.event_id, company_name: store.getState().auth.company.name}))
         setModalOpen({})
       }
     } catch (error) {
@@ -71,10 +72,10 @@ const useEvent = () => {
     try {
       const response = await apiRequest.patch('/event/reject', {
         event_id: data.event_id,
-        remarks: data.remarks
+        remarks: `rejected by ${store.getState().auth.company.name} with : "${data.remarks}"`
       })
       if (response.status === 200) {
-        dispatch(rejectEvent(response.data.data))
+        dispatch(rejectEvent({...response.data.data, id: data.event_id, company_name: store.getState().auth.company.name}))
         setModalOpen({})
       }
     } catch (error) {

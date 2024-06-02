@@ -1,8 +1,9 @@
+import RowContainer from '@/components/containers/RowContainer'
 import { colors } from '@/constants/colors'
 import { setPage, setRowsPerPage } from '@/libs/redux/features/events/eventSlice'
 import { useAppDispatch, useAppSelector } from '@/libs/redux/hooks'
 import store, { RootState } from '@/libs/redux/store'
-import { Check, Close } from '@mui/icons-material'
+import { Check, Close, InfoOutlined } from '@mui/icons-material'
 import {
   Fab,
   Paper,
@@ -20,10 +21,11 @@ import {
 import dayjs from 'dayjs'
 import { Fragment } from 'react/jsx-runtime'
 import useEvent from '../_hooks/useEvent.hook'
+import EventDetailModal from './EventDetailModal'
 import UpdateEventModal from './UpdateEventModal'
 
 interface Column {
-  id: 'id' | 'company' | 'name' | 'location' | 'dates' | 'vendors' | 'created_at' | 'action';
+  id: 'id' | 'company' | 'name' | 'location' | 'dates' | 'vendors' | 'remarks' | 'created_at' | 'action';
   label: string
   minWidth?: number
   align?: 'right' | 'left' | 'center'
@@ -31,13 +33,14 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 30, align: 'center' },
-  { id: 'company', label: 'Company', minWidth: 100, align: 'left' },
-  { id: 'name', label: 'Name', minWidth: 170, align: 'left' },
+  { id: 'company', label: 'Company', minWidth: 70, align: 'left' },
+  { id: 'name', label: 'Name', minWidth: 100, align: 'left' },
   { id: 'location', label: 'Location', minWidth: 100, align: 'left' },
-  { id: 'dates', label: 'Proposed Dates', minWidth: 100, align: 'left' },
-  { id: 'vendors', label: 'Vendors', minWidth: 100, align: 'left' },
+  { id: 'dates', label: 'Proposed Dates', minWidth: 70, align: 'left' },
+  { id: 'vendors', label: 'Tagged Vendors', minWidth: 70, align: 'left' },
+  { id: 'remarks', label: 'Remarks', minWidth: 100, align: 'left' },
   { id: 'created_at', label: 'Created At', minWidth: 100, align: 'left' },
-  { id: 'action', label: 'Action', minWidth: 120, align: 'left' },
+  { id: 'action', label: 'Action', minWidth: 100, align: 'left' },
 ]
 
 const EventTable = () => {
@@ -135,6 +138,13 @@ const EventTable = () => {
                               onClose={() => handleCloseModal(`modal-update-reject-${row.id}`)}
                               onReject={(data) => handleRejectEvent(data)}
                             />
+                             <EventDetailModal
+                              data-testid={`modal-detail-${row.id}`}
+                              id={`modal-detail-${row.id}`}
+                              open={modalOpen[`modal-detail-${row.id}`] === true}
+                              data={row}
+                              onClose={handleCloseModal}
+                            />
                           </>
                         )
                       }
@@ -159,14 +169,30 @@ const EventTable = () => {
                         <TableCell align={'left'}>
                           {
                             row.dates.map((date) => (
-                              <Typography variant="body2">{dayjs(date).format('YYYY-MM-DD')}</Typography>
+                              <Typography variant="body2" key={`date-${date}`}>- {dayjs(date).format('YYYY-MM-DD')}</Typography>
                             ))
                           }
                         </TableCell>
                         <TableCell align={'left'}>
                           {
                             row.vendors.map((vendor) => (
-                              <Typography variant="body2">{vendor.name}</Typography>
+                              <RowContainer alignItems={'center'}>
+                                <Typography 
+                                key={`vendor-name-${vendor.name}`}
+                                variant="body2" 
+                                >
+                                  - {vendor.name}
+                                </Typography>
+                                {vendor.status === 'approved' && (<Check sx={{color: colors.success.main}} />)}
+                                {vendor.status === 'rejected' && (<Close sx={{color: colors.error.main}} />)}
+                              </RowContainer>
+                            ))
+                          }
+                        </TableCell>
+                        <TableCell align={'left'}>
+                          {
+                            row.vendors.map((vendor) => (
+                              <Typography variant="body2" key={`vendor-remarks-${vendor.name}`}>{vendor.remarks}</Typography>
                             ))
                           }
                         </TableCell>
@@ -186,11 +212,20 @@ const EventTable = () => {
                               : {}
                           }
                         >
+                          <Fab
+                            size='small'
+                            color='info'
+                            sx={{marginX: '8px'}}
+                            data-testid={`reject-event-button-${row.id}`}
+                            onClick={() => handleOpenModal(`modal-detail-${row.id}`)}
+                          >
+                            <InfoOutlined sx={{color: colors.white.light}} />
+                          </Fab>
                           {
                             store.getState().auth.role.id === 2 && (
                               <>
                                 <Fab
-                                  size='medium'
+                                  size='small'
                                   color='error'
                                   sx={{marginX: '8px'}}
                                   data-testid={`reject-event-button-${row.id}`}
@@ -199,7 +234,7 @@ const EventTable = () => {
                                   <Close sx={{color: colors.white.light}} />
                                 </Fab>
                                 <Fab
-                                  size='medium'
+                                  size='small'
                                   color='success'
                                   sx={{marginX: '8px'}}
                                   data-testid={`approve-event-button-${row.id}`}

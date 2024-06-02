@@ -93,14 +93,17 @@ const UpdateEventModal = (props: IUpdateEventModalProps) => {
         <DialogContent>
           <Grid2 container direction={'row'} spacing={3}>
             <Grid2 xs={12}>
-              <TextInput
-                disabled={type === 'approve'}
-                label="Remarks"
-                name="remarks"
-                placeholder="Enter event's remark"
-                value={form.remarks || ""}
-                onChange={e => handleChangeForm(e)}
-              />
+              {
+                type === 'reject' && (
+                  <TextInput
+                    label="Remarks"
+                    name="remarks"
+                    placeholder="Enter event's remark"
+                    value={form.remarks || ""}
+                    onChange={e => handleChangeForm(e)}
+                  />
+                )
+              }
             </Grid2>
             <Grid2 xs={12}>
               {

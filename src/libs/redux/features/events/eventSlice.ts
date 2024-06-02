@@ -1,7 +1,6 @@
 import { Event, UpdateEvent } from '@/types/events'
 import { createSlice } from '@reduxjs/toolkit'
 import { PayloadAction } from '@reduxjs/toolkit/react'
-import store from '../../store'
 
 export interface EventState {
   events: Event[]
@@ -33,13 +32,13 @@ export const eventSlice = createSlice({
         console.log(error)
       }
     },
-    approveEvent: (state, action: PayloadAction<UpdateEvent>) => {
+    approveEvent: (state, action: PayloadAction<{id: number, company_name: string} & UpdateEvent>) => {
       try {
         const eventIndex = [...state.events].findIndex(
-          event => event.id === action.payload.event_id
+          (event) => event.id === action.payload.id
         )
         const vendorIndex = [...state.events][eventIndex].vendors
-        .findIndex((vendor) => vendor.name === store.getState().auth.company.name)
+        .findIndex((vendor) => vendor.name === action.payload.company_name)
         
         state.events[eventIndex].vendors[vendorIndex].status = 'approved'
         state.events[eventIndex].vendors[vendorIndex].remarks = action.payload.remarks
@@ -47,15 +46,15 @@ export const eventSlice = createSlice({
         console.log(error)
       }
     },
-    rejectEvent: (state, action: PayloadAction<UpdateEvent>) => {
+    rejectEvent: (state, action: PayloadAction<{id: number, company_name: string} & UpdateEvent>) => {
       try {
         const eventIndex = [...state.events].findIndex(
-          event => event.id === action.payload.event_id
+          (event) => event.id === action.payload.id
         )
         const vendorIndex = [...state.events][eventIndex].vendors
-        .findIndex((vendor) => vendor.name === store.getState().auth.company.name)
+        .findIndex((vendor) => vendor.name === action.payload.company_name)
         
-        state.events[eventIndex].vendors[vendorIndex].status = 'rejected'
+        state.events[eventIndex].vendors[vendorIndex].status = 'reject'
         state.events[eventIndex].vendors[vendorIndex].remarks = action.payload.remarks
       } catch (error) {
         console.log(error)

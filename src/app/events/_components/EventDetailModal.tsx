@@ -7,14 +7,16 @@ import {
   Box,
   Dialog,
   DialogContent,
+  Divider,
   IconButton,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
+import dayjs from 'dayjs'
 
-interface IUserDetailModalProps {
+interface IEventDetailModalProps {
   id: string
   open: boolean | undefined
   data?: Event
@@ -22,7 +24,7 @@ interface IUserDetailModalProps {
   [key: string]: any
 }
 
-const UserDetailModal = (props: IUserDetailModalProps) => {
+const EventDetailModal = (props: IEventDetailModalProps) => {
   const { id, open, data = initialEvent, onClose, ...restProps } = props
 
   const theme = useTheme()
@@ -71,6 +73,9 @@ const UserDetailModal = (props: IUserDetailModalProps) => {
           <Grid2 xs={16} display={'flex'} justifyContent={'center'} marginTop={'24px'}>
             <Typography variant="h4">{data.name}</Typography>
           </Grid2>
+          <Grid2 xs={16} display={'flex'} justifyContent={'center'}>
+            <Typography variant="subtitle1">{data.location}</Typography>
+          </Grid2>
           <Grid2
             xs={16}
             container
@@ -109,23 +114,18 @@ const UserDetailModal = (props: IUserDetailModalProps) => {
               zIndex={999}
             >
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
-                <Typography variant="body2">Username</Typography>
-                {/* <Typography variant="subtitle2">{data.username}</Typography> */}
+                <Typography variant="body2">Company</Typography>
+                <Typography variant="subtitle2">{data.company.name}</Typography>
               </Box>
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
                 <Typography variant="body2" color={colors.black.light}>
-                  Phone
+                  Tagged Vendor
                 </Typography>
-                {/* <Typography variant="subtitle2">{data.phone}</Typography> */}
-              </Box>
-              <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
-                <Typography variant="body2" color={colors.black.light}>
-                  Address
-                </Typography>
-                {/* <Typography variant="subtitle2" paragraph>{`
-                  ${data.address.street}, ${data.address.suite}
-                  ${data.address.city}, ${data.address.zipcode}
-                `}</Typography> */}
+                {
+                  data.vendors.map((vendor) => (
+                    <Typography variant="subtitle2">- {vendor.name}</Typography>
+                  ))
+                }
               </Box>
             </Grid2>
             <Grid2
@@ -141,21 +141,49 @@ const UserDetailModal = (props: IUserDetailModalProps) => {
             >
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
                 <Typography variant="body2" color={colors.black.light}>
-                  Email
+                  Created At
                 </Typography>
-                {/* <Typography variant="subtitle2">{data.email}</Typography> */}
+                <Typography variant="subtitle2">{dayjs(data.created_at).format('YYYY-MM-DD')}</Typography>
               </Box>
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
                 <Typography variant="body2" color={colors.black.light}>
-                  Website
+                  Proposed Date
                 </Typography>
-                {/* <Typography variant="subtitle2">{data.website}</Typography> */}
+                {
+                  data.dates.map((date) => (
+                    <Typography variant="subtitle2">- {dayjs(date).format('YYYY-MM-DD')}</Typography>
+                  ))
+                }
               </Box>
+            </Grid2>
+            <Grid2
+              xs={16}
+              display={'flex'}
+              flexDirection={'column'}
+              alignItems={'center'}
+            >
+              <Divider sx={{width: '90%'}} />
+            </Grid2>
+            <Grid2
+              xs={16}
+              component={Box}
+              padding={'32px 32px'}
+              display={'flex'}
+              flexDirection={'column'}
+              alignItems={'flex-start'}
+              justifyContent={'flex-start'}
+              gap={'16px'}
+              zIndex={999}
+            >
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
                 <Typography variant="body2" color={colors.black.light}>
-                  Company
+                  Remarks
                 </Typography>
-                <Typography variant="subtitle2">{data.company.name}</Typography>
+                {
+                  data.vendors.map((vendor) => (
+                    <Typography variant="subtitle2">- {vendor.remarks}</Typography>
+                  ))
+                }
               </Box>
             </Grid2>
           </Grid2>
@@ -165,4 +193,4 @@ const UserDetailModal = (props: IUserDetailModalProps) => {
   )
 }
 
-export default UserDetailModal
+export default EventDetailModal
