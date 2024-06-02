@@ -49,7 +49,7 @@ const columns: readonly Column[] = [
   { id: 'vendors', label: 'Tagged Vendors', minWidth: 70, align: 'left' },
   { id: 'remarks', label: 'Remarks', minWidth: 100, align: 'left' },
   { id: 'created_at', label: 'Created At', minWidth: 100, align: 'left' },
-  { id: 'action', label: 'Action', minWidth: 100, align: 'left' },
+  { id: 'action', label: 'Action', minWidth: 130, align: 'left' },
 ]
 
 const EventTable = () => {

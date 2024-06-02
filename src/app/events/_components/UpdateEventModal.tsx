@@ -3,6 +3,7 @@ import TextInput from '@/components/inputs/TextInput'
 import store from '@/libs/redux/store'
 import { Event, UpdateEvent } from '@/types/events'
 import { setNestedState } from '@/utils/stateHelper'
+import { capitalizeFirstLetter } from '@/utils/strings'
 import {
   Button,
   Dialog,
@@ -85,7 +86,7 @@ const UpdateEventModal = (props: IUpdateEventModalProps) => {
           zIndex: '10000',
         }}
       >
-        <DialogTitle variant="h4">{`Update Event ${data.name}`}</DialogTitle>
+        <DialogTitle variant="h4">{`${capitalizeFirstLetter(type)} Event ${data.name}`}</DialogTitle>
         <DialogContent>
           <Grid2 container direction={'row'} spacing={3}>
             <Grid2 xs={12}>

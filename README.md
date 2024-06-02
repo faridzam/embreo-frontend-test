@@ -12,10 +12,10 @@
 
 List the key features of app:
 
-- Get users from dummy api
-- Create user
-- Update user
-- Delete user
+- Login with jwt verification
+- Create event
+- Approve event
+- Reject event
 
 ## Screenshots
 
@@ -23,6 +23,9 @@ List the key features of app:
 ![Image 2](./src/assets/screenshot/screenshot_2.png)
 ![Image 3](./src/assets/screenshot/screenshot_3.png)
 ![Image 4](./src/assets/screenshot/screenshot_4.png)
+![Image 5](./src/assets/screenshot/screenshot_5.png)
+![Image 6](./src/assets/screenshot/screenshot_6.png)
+![Image 7](./src/assets/screenshot/screenshot_7.png)
 
 ## Prerequisites
 
@@ -43,4 +46,3 @@ How to install and set up app on local
 - To build the app: `npm run build`
 - To run the app: `npm run preview`
 - To run prettier : `npm run format`
-- To run unit test : `npm run test`
