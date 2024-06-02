@@ -1,28 +1,26 @@
-import { InputBase, Typography } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { InputBase, Typography } from '@mui/material'
+import FormControl from '@mui/material/FormControl'
+import ListItemText from '@mui/material/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 interface ISelectInputProps {
-  label?: string;
-  placeholder?: string;
-  options: string[];
-  onChange: (val: string) => void;
+  label?: string
+  placeholder?: string
+  options: string[]
+  onChange: (val: string) => void
 }
 
 export default function SelectInput(params: ISelectInputProps) {
-  const {
-    label = "", placeholder = "", options, onChange
-  } = params
+  const { label = '', placeholder = '', options, onChange } = params
 
   const handleChange = (event: SelectChangeEvent) => {
     onChange(event.target.value)
-  };
+  }
 
   return (
     <FormControl fullWidth>
-      <Typography variant='body1'>{label}</Typography>
+      <Typography variant="body1">{label}</Typography>
       <Select
         placeholder={placeholder}
         onChange={handleChange}
@@ -39,9 +37,9 @@ export default function SelectInput(params: ISelectInputProps) {
           />
         }
         MenuProps={{
-          sx:{
-            zIndex: '10000 !important'
-          }
+          sx: {
+            zIndex: '10000 !important',
+          },
         }}
         sx={{
           backgroundColor: '#F8F9F9',
@@ -52,12 +50,12 @@ export default function SelectInput(params: ISelectInputProps) {
           borderRadius: '8px',
         }}
       >
-        {options.map((option) => (
+        {options.map(option => (
           <MenuItem key={`option-${option}`} value={option.toString()}>
             <ListItemText primary={option} />
           </MenuItem>
         ))}
       </Select>
     </FormControl>
-  );
+  )
 }

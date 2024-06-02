@@ -1,23 +1,20 @@
-import checkAuth from '@/utils/CheckAuth';
-import { delay } from '@/utils/helper';
-import { lazy } from 'react';
-import { Navigate, RouteObject } from 'react-router-dom';
+import { checkAuth } from '@/utils/Auth'
+import { delay } from '@/utils/helper'
+import { lazy } from 'react'
+import { Navigate, RouteObject } from 'react-router-dom'
 
-const Login = lazy(
-  () => delay(100).then(() => import("@/app/login/Page"))
-);
+const Login = lazy(() => delay(100).then(() => import('@/app/login/Page')))
 
 const isLoggedIn = await checkAuth()
 
 export default function PublicRoutes(): RouteObject[] {
-
   return [
     {
-      path: "/*",
+      path: '/*',
       element: isLoggedIn ? <Navigate to={'/'} replace /> : <Login />,
     },
     {
-      path: "/login",
+      path: '/login',
       element: isLoggedIn ? <Navigate to={'/'} replace /> : <Login />,
     },
   ]

@@ -1,20 +1,28 @@
-import ColumnContainer from '@/components/containers/ColumnContainer';
-import { Button, Container, Paper, TextField, Typography } from '@mui/material';
-import React from 'react';
-import useLogin from './hooks/useLogin.hooks';
+import ColumnContainer from '@/components/containers/ColumnContainer'
+import { Button, Container, Paper, TextField, Typography } from '@mui/material'
+import React from 'react'
+import useLogin from './hooks/useLogin.hooks'
 
 const Login: React.FC = () => {
-
-  const {
-    usernameRef,
-    passwordRef,
-    handleSubmit,
-  } = useLogin()
+  const { usernameRef, passwordRef, handleSubmit } = useLogin()
 
   return (
-    <ColumnContainer height={'80vh'} alignItems={'center'} justifyContent={'center'} data-testid="login_page_container">
+    <ColumnContainer
+      height={'80vh'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      data-testid="login_page_container"
+    >
       <Container component="main" maxWidth="xs">
-        <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <Typography variant="h5">Login</Typography>
           <TextField
             inputRef={usernameRef}
@@ -33,13 +41,19 @@ const Login: React.FC = () => {
             type="password"
             data-testid="text_field_password"
           />
-          <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ marginTop: 2 }} data-testid="login_button">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            sx={{ marginTop: 2 }}
+            data-testid="login_button"
+          >
             Login
           </Button>
         </Paper>
       </Container>
     </ColumnContainer>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

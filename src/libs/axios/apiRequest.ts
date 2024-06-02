@@ -21,7 +21,7 @@ class HttpRequest {
 
     this.api.interceptors.request.use(
       config => {
-        const token = store.getState().auth.token;
+        const token = store.getState().auth.token
         if (token) {
           config.headers.Authorization = `Bearer ${token}`
         }
@@ -37,10 +37,16 @@ class HttpRequest {
         return res
       },
       async error => {
-
-        if (error.config?.url !== '/auth/check' && error.config?.url !== '/auth/login' && (error.response?.status === 401)) {
+        if (
+          error.config?.url !== '/auth/check' &&
+          error.config?.url !== '/auth/login' &&
+          error.response?.status === 401
+        ) {
           store.dispatch(removeToken())
-        } else if (error.config?.url !== '/auth/check' && (error.response?.status === 401)) {
+        } else if (
+          error.config?.url !== '/auth/check' &&
+          error.response?.status === 401
+        ) {
           store.dispatch(removeToken())
         }
 

@@ -32,28 +32,36 @@ export const eventSlice = createSlice({
         console.log(error)
       }
     },
-    approveEvent: (state, action: PayloadAction<{id: number, company_name: string} & UpdateEvent>) => {
+    approveEvent: (
+      state,
+      action: PayloadAction<{ id: number; company_name: string } & UpdateEvent>
+    ) => {
       try {
         const eventIndex = [...state.events].findIndex(
-          (event) => event.id === action.payload.id
+          event => event.id === action.payload.id
         )
-        const vendorIndex = [...state.events][eventIndex].vendors
-        .findIndex((vendor) => vendor.name === action.payload.company_name)
-        
+        const vendorIndex = [...state.events][eventIndex].vendors.findIndex(
+          vendor => vendor.name === action.payload.company_name
+        )
+
         state.events[eventIndex].vendors[vendorIndex].status = 'approved'
         state.events[eventIndex].vendors[vendorIndex].remarks = action.payload.remarks
       } catch (error) {
         console.log(error)
       }
     },
-    rejectEvent: (state, action: PayloadAction<{id: number, company_name: string} & UpdateEvent>) => {
+    rejectEvent: (
+      state,
+      action: PayloadAction<{ id: number; company_name: string } & UpdateEvent>
+    ) => {
       try {
         const eventIndex = [...state.events].findIndex(
-          (event) => event.id === action.payload.id
+          event => event.id === action.payload.id
         )
-        const vendorIndex = [...state.events][eventIndex].vendors
-        .findIndex((vendor) => vendor.name === action.payload.company_name)
-        
+        const vendorIndex = [...state.events][eventIndex].vendors.findIndex(
+          vendor => vendor.name === action.payload.company_name
+        )
+
         state.events[eventIndex].vendors[vendorIndex].status = 'reject'
         state.events[eventIndex].vendors[vendorIndex].remarks = action.payload.remarks
       } catch (error) {

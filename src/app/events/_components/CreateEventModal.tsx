@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogTitle,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { ChangeEvent, useEffect, useState } from 'react'
@@ -39,7 +39,7 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-  const {vendors, getVendors} = useEvent()
+  const { vendors, getVendors } = useEvent()
 
   const onSubmit = () => {
     onCreate(form)
@@ -59,17 +59,18 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
   const updateDateAtIndex = (index: number, newDate: string) => {
     setForm(prevState => ({
       ...prevState,
-      dates: prevState.dates!.map((date, i) => i === index ? newDate : date)
-    }));
+      dates: prevState.dates!.map((date, i) => (i === index ? newDate : date)),
+    }))
     console.log(form)
-  };
+  }
 
-  const conditionSubmit = (
-    form.name && form.name.length > 0 &&
-    form.location && form.location.length > 0 &&
+  const conditionSubmit =
+    form.name &&
+    form.name.length > 0 &&
+    form.location &&
+    form.location.length > 0 &&
     form.vendors!.length > 0 &&
     form.dates!.length > 0
-  )
 
   useEffect(() => {
     getVendors()
@@ -87,9 +88,7 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
           zIndex: '10000',
         }}
       >
-        <DialogTitle variant="h4">
-          Create Event
-        </DialogTitle>
+        <DialogTitle variant="h4">Create Event</DialogTitle>
         <DialogContent>
           <Grid2 container direction={'row'} spacing={3}>
             <Grid2 xs={12}>
@@ -97,7 +96,7 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
                 label="Name"
                 name="name"
                 placeholder="Enter event's name"
-                value={form.name || ""}
+                value={form.name || ''}
                 onChange={e => handleChangeForm(e)}
               />
             </Grid2>
@@ -106,16 +105,16 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
                 label="Location"
                 name="location"
                 placeholder="Enter event's location"
-                value={form.location || ""}
+                value={form.location || ''}
                 onChange={e => handleChangeForm(e)}
               />
             </Grid2>
-            {new Array(3).fill("").map((_, index) => (  
+            {new Array(3).fill('').map((_, index) => (
               <Grid2 xs={4} key={`date-picker-${index}`}>
                 <DateInput
-                  label={`Date ${index+1}`}
+                  label={`Date ${index + 1}`}
                   value={form.dates![index]}
-                  onChange={(value) => updateDateAtIndex(index, value.format("YYYY-MM-DD"))}
+                  onChange={value => updateDateAtIndex(index, value.format('YYYY-MM-DD'))}
                 />
               </Grid2>
             ))}
@@ -123,13 +122,18 @@ const CreateEventModal = (props: ICreateEventModalProps) => {
               <MultiSelectInput
                 label="Vendors"
                 placeholder="Select tagged vendors"
-                value={form.vendors!.map((val) => val.toString())}
+                // value={form.vendors!.map(val => val.toString())}
                 options={vendors}
-                onChange={(value) => setForm((prevState) => {
-                  return {...prevState, vendors: value
-                    .filter((stringVal) => stringVal != "")
-                    .map((stringVal) =>  parseInt(stringVal, 10))}
-                })}
+                onChange={value =>
+                  setForm(prevState => {
+                    return {
+                      ...prevState,
+                      vendors: value
+                        .filter(stringVal => stringVal != '')
+                        .map(stringVal => parseInt(stringVal, 10)),
+                    }
+                  })
+                }
               />
             </Grid2>
           </Grid2>

@@ -3,9 +3,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
 
 export interface AuthState {
-  token: string,
-  user: User,
-  company: Company,
+  token: string
+  user: User
+  company: Company
   role: Role
 }
 
@@ -15,15 +15,15 @@ const initialState: AuthState = {
     id: 0,
     role_id: 0,
     company_id: 0,
-    name: ''
+    name: '',
   },
   company: {
     id: 0,
-    name: ''
+    name: '',
   },
   role: {
     id: 0,
-    name: ''
+    name: '',
   },
 }
 
@@ -37,12 +37,12 @@ export const authSlice = createSlice({
       state.company = action.payload.company
       state.role = action.payload.role
     },
-    removeToken: (state) => {
+    removeToken: state => {
       state.token = ''
     },
-  }
+  },
 })
 
-export const {setToken, removeToken} = authSlice.actions
+export const { setToken, removeToken } = authSlice.actions
 export const getToken = (state: RootState) => state.auth.token
 export const authReducer = authSlice.reducer

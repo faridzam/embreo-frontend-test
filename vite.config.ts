@@ -18,6 +18,11 @@ export default defineConfig(({}) => {
       host: true,
       origin: "http://localhost:3002",
     },
+    esbuild: {
+      supported: {
+        'top-level-await': true
+      }
+    },
     resolve: {
       alias: [
         {find: '@', replacement: path.resolve(__dirname, 'src')},

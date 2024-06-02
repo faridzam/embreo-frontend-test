@@ -121,11 +121,9 @@ const EventDetailModal = (props: IEventDetailModalProps) => {
                 <Typography variant="body2" color={colors.black.light}>
                   Tagged Vendor
                 </Typography>
-                {
-                  data.vendors.map((vendor) => (
-                    <Typography variant="subtitle2">- {vendor.name}</Typography>
-                  ))
-                }
+                {data.vendors.map(vendor => (
+                  <Typography variant="subtitle2">- {vendor.name}</Typography>
+                ))}
               </Box>
             </Grid2>
             <Grid2
@@ -143,17 +141,19 @@ const EventDetailModal = (props: IEventDetailModalProps) => {
                 <Typography variant="body2" color={colors.black.light}>
                   Created At
                 </Typography>
-                <Typography variant="subtitle2">{dayjs(data.created_at).format('YYYY-MM-DD')}</Typography>
+                <Typography variant="subtitle2">
+                  {dayjs(data.created_at).format('YYYY-MM-DD')}
+                </Typography>
               </Box>
               <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
                 <Typography variant="body2" color={colors.black.light}>
                   Proposed Date
                 </Typography>
-                {
-                  data.dates.map((date) => (
-                    <Typography variant="subtitle2">- {dayjs(date).format('YYYY-MM-DD')}</Typography>
-                  ))
-                }
+                {data.dates.map(date => (
+                  <Typography variant="subtitle2">
+                    - {dayjs(date).format('YYYY-MM-DD')}
+                  </Typography>
+                ))}
               </Box>
             </Grid2>
             <Grid2
@@ -162,7 +162,7 @@ const EventDetailModal = (props: IEventDetailModalProps) => {
               flexDirection={'column'}
               alignItems={'center'}
             >
-              <Divider sx={{width: '90%'}} />
+              <Divider sx={{ width: '90%' }} />
             </Grid2>
             <Grid2
               xs={16}
@@ -179,11 +179,9 @@ const EventDetailModal = (props: IEventDetailModalProps) => {
                 <Typography variant="body2" color={colors.black.light}>
                   Remarks
                 </Typography>
-                {
-                  data.vendors.map((vendor) => (
-                    <Typography variant="subtitle2">- {vendor.remarks}</Typography>
-                  ))
-                }
+                {data.vendors.map(vendor => (
+                  <Typography variant="subtitle2">- {vendor.remarks}</Typography>
+                ))}
               </Box>
             </Grid2>
           </Grid2>

@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogTitle,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import dayjs from 'dayjs'
@@ -46,14 +46,14 @@ const UpdateEventModal = (props: IUpdateEventModalProps) => {
     switch (type) {
       case 'approve':
         onApprove(form)
-        break;
-    
+        break
+
       case 'reject':
         onReject(form)
-        break;
-    
+        break
+
       default:
-        break;
+        break
     }
   }
 
@@ -71,9 +71,7 @@ const UpdateEventModal = (props: IUpdateEventModalProps) => {
     setForm((prevState: UpdateEvent) => setNestedState(prevState, keys, value))
   }
 
-  const conditionSubmit = (
-    form.remarks && form.remarks.length > 0 && form.remarks !== ""
-  )
+  const conditionSubmit = form.remarks && form.remarks.length > 0 && form.remarks !== ''
 
   return (
     <>
@@ -87,38 +85,34 @@ const UpdateEventModal = (props: IUpdateEventModalProps) => {
           zIndex: '10000',
         }}
       >
-        <DialogTitle variant="h4">
-          {`Update Event ${data.name}`}
-        </DialogTitle>
+        <DialogTitle variant="h4">{`Update Event ${data.name}`}</DialogTitle>
         <DialogContent>
           <Grid2 container direction={'row'} spacing={3}>
             <Grid2 xs={12}>
-              {
-                type === 'reject' && (
-                  <TextInput
-                    label="Remarks"
-                    name="remarks"
-                    placeholder="Enter event's remark"
-                    value={form.remarks || ""}
-                    onChange={e => handleChangeForm(e)}
-                  />
-                )
-              }
+              {type === 'reject' && (
+                <TextInput
+                  label="Remarks"
+                  name="remarks"
+                  placeholder="Enter event's remark"
+                  value={form.remarks || ''}
+                  onChange={e => handleChangeForm(e)}
+                />
+              )}
             </Grid2>
             <Grid2 xs={12}>
-              {
-                type === 'approve' && (
-                  <SelectInput
-                    label='Date'
-                    placeholder='Select approved date'
-                    options={data.dates.map((date) => dayjs(date).format('YYYY-MM-DD'))}
-                    onChange={(val) => setForm((prevState) => ({
+              {type === 'approve' && (
+                <SelectInput
+                  label="Date"
+                  placeholder="Select approved date"
+                  options={data.dates.map(date => dayjs(date).format('YYYY-MM-DD'))}
+                  onChange={val =>
+                    setForm(prevState => ({
                       ...prevState,
-                      remarks: `approved by ${store.getState().auth.company.name} on ${val}`
-                    }))}
-                  />
-                )
-              }
+                      remarks: `approved by ${store.getState().auth.company.name} on ${val}`,
+                    }))
+                  }
+                />
+              )}
             </Grid2>
           </Grid2>
         </DialogContent>

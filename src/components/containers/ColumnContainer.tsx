@@ -1,6 +1,6 @@
-import { Grid, GridProps } from "@mui/material";
+import { Grid, GridProps } from '@mui/material'
 
-export default function ColumnContainer(params:GridProps) {
+export default function ColumnContainer(params: GridProps) {
   const {
     container = true,
     direction = 'column',
@@ -9,8 +9,8 @@ export default function ColumnContainer(params:GridProps) {
     children,
     gap = '16px',
     ...props
-  } = params;
-  return(
+  } = params
+  return (
     <Grid
       {...props}
       container={container}
@@ -22,5 +22,5 @@ export default function ColumnContainer(params:GridProps) {
     >
       {children}
     </Grid>
-  );
+  )
 }

@@ -16,7 +16,7 @@ import {
   TableRow,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from '@mui/material'
 import dayjs from 'dayjs'
 import { Fragment } from 'react/jsx-runtime'
@@ -25,7 +25,16 @@ import EventDetailModal from './EventDetailModal'
 import UpdateEventModal from './UpdateEventModal'
 
 interface Column {
-  id: 'id' | 'company' | 'name' | 'location' | 'dates' | 'vendors' | 'remarks' | 'created_at' | 'action';
+  id:
+    | 'id'
+    | 'company'
+    | 'name'
+    | 'location'
+    | 'dates'
+    | 'vendors'
+    | 'remarks'
+    | 'created_at'
+    | 'action'
   label: string
   minWidth?: number
   align?: 'right' | 'left' | 'center'
@@ -117,37 +126,39 @@ const EventTable = () => {
                 .map(row => {
                   return (
                     <Fragment key={`event-${row.id}`}>
-                      {
-                        store.getState().auth.role.id === 2 && (
-                          <>     
-                            <UpdateEventModal
-                              data-testid={`modal-update-approve-${row.id}`}
-                              id={`modal-update-approve-${row.id}`}
-                              type='approve'
-                              data={row}
-                              open={modalOpen[`modal-update-approve-${row.id}`] === true}
-                              onClose={() => handleCloseModal(`modal-update-approve-${row.id}`)}
-                              onApprove={(data) => handleApproveEvent(data)}
-                            />
-                            <UpdateEventModal
-                              data-testid={`modal-update-reject-${row.id}`}
-                              id={`modal-update-reject-${row.id}`}
-                              type='reject'
-                              data={row}
-                              open={modalOpen[`modal-update-reject-${row.id}`] === true}
-                              onClose={() => handleCloseModal(`modal-update-reject-${row.id}`)}
-                              onReject={(data) => handleRejectEvent(data)}
-                            />
-                             <EventDetailModal
-                              data-testid={`modal-detail-${row.id}`}
-                              id={`modal-detail-${row.id}`}
-                              open={modalOpen[`modal-detail-${row.id}`] === true}
-                              data={row}
-                              onClose={handleCloseModal}
-                            />
-                          </>
-                        )
-                      }
+                      {store.getState().auth.role.id === 2 && (
+                        <>
+                          <UpdateEventModal
+                            data-testid={`modal-update-approve-${row.id}`}
+                            id={`modal-update-approve-${row.id}`}
+                            type="approve"
+                            data={row}
+                            open={modalOpen[`modal-update-approve-${row.id}`] === true}
+                            onClose={() =>
+                              handleCloseModal(`modal-update-approve-${row.id}`)
+                            }
+                            onApprove={data => handleApproveEvent(data)}
+                          />
+                          <UpdateEventModal
+                            data-testid={`modal-update-reject-${row.id}`}
+                            id={`modal-update-reject-${row.id}`}
+                            type="reject"
+                            data={row}
+                            open={modalOpen[`modal-update-reject-${row.id}`] === true}
+                            onClose={() =>
+                              handleCloseModal(`modal-update-reject-${row.id}`)
+                            }
+                            onReject={data => handleRejectEvent(data)}
+                          />
+                        </>
+                      )}
+                      <EventDetailModal
+                        data-testid={`modal-detail-${row.id}`}
+                        id={`modal-detail-${row.id}`}
+                        open={modalOpen[`modal-detail-${row.id}`] === true}
+                        data={row}
+                        onClose={handleCloseModal}
+                      />
                       <TableRow
                         hover
                         role="checkbox"
@@ -167,37 +178,44 @@ const EventTable = () => {
                           <Typography variant="body2">{row.location}</Typography>
                         </TableCell>
                         <TableCell align={'left'}>
-                          {
-                            row.dates.map((date) => (
-                              <Typography variant="body2" key={`date-${date}`}>- {dayjs(date).format('YYYY-MM-DD')}</Typography>
-                            ))
-                          }
+                          {row.dates.map(date => (
+                            <Typography variant="body2" key={`date-${date}`}>
+                              - {dayjs(date).format('YYYY-MM-DD')}
+                            </Typography>
+                          ))}
                         </TableCell>
                         <TableCell align={'left'}>
-                          {
-                            row.vendors.map((vendor) => (
-                              <RowContainer alignItems={'center'}>
-                                <Typography 
+                          {row.vendors.map(vendor => (
+                            <RowContainer alignItems={'center'}>
+                              <Typography
                                 key={`vendor-name-${vendor.name}`}
-                                variant="body2" 
-                                >
-                                  - {vendor.name}
-                                </Typography>
-                                {vendor.status === 'approved' && (<Check sx={{color: colors.success.main}} />)}
-                                {vendor.status === 'rejected' && (<Close sx={{color: colors.error.main}} />)}
-                              </RowContainer>
-                            ))
-                          }
+                                variant="body2"
+                              >
+                                - {vendor.name}
+                              </Typography>
+                              {vendor.status === 'approved' && (
+                                <Check sx={{ color: colors.success.main }} />
+                              )}
+                              {vendor.status === 'rejected' && (
+                                <Close sx={{ color: colors.error.main }} />
+                              )}
+                            </RowContainer>
+                          ))}
                         </TableCell>
                         <TableCell align={'left'}>
-                          {
-                            row.vendors.map((vendor) => (
-                              <Typography variant="body2" key={`vendor-remarks-${vendor.name}`}>{vendor.remarks}</Typography>
-                            ))
-                          }
+                          {row.vendors.map(vendor => (
+                            <Typography
+                              variant="body2"
+                              key={`vendor-remarks-${vendor.name}`}
+                            >
+                              {vendor.remarks}
+                            </Typography>
+                          ))}
                         </TableCell>
                         <TableCell align={'left'}>
-                          <Typography variant="body2">{dayjs(row.created_at).format('YYYY-MM-DD')}</Typography>
+                          <Typography variant="body2">
+                            {dayjs(row.created_at).format('YYYY-MM-DD')}
+                          </Typography>
                         </TableCell>
                         <TableCell
                           align={'center'}
@@ -213,38 +231,40 @@ const EventTable = () => {
                           }
                         >
                           <Fab
-                            size='small'
-                            color='info'
-                            sx={{marginX: '8px'}}
+                            size="small"
+                            color="info"
+                            sx={{ marginX: '8px' }}
                             data-testid={`reject-event-button-${row.id}`}
                             onClick={() => handleOpenModal(`modal-detail-${row.id}`)}
                           >
-                            <InfoOutlined sx={{color: colors.white.light}} />
+                            <InfoOutlined sx={{ color: colors.white.light }} />
                           </Fab>
-                          {
-                            store.getState().auth.role.id === 2 && (
-                              <>
-                                <Fab
-                                  size='small'
-                                  color='error'
-                                  sx={{marginX: '8px'}}
-                                  data-testid={`reject-event-button-${row.id}`}
-                                  onClick={() => handleOpenModal(`modal-update-reject-${row.id}`)}
-                                >
-                                  <Close sx={{color: colors.white.light}} />
-                                </Fab>
-                                <Fab
-                                  size='small'
-                                  color='success'
-                                  sx={{marginX: '8px'}}
-                                  data-testid={`approve-event-button-${row.id}`}
-                                  onClick={() => handleOpenModal(`modal-update-approve-${row.id}`)}
-                                >
-                                  <Check sx={{color: colors.white.light}} />
-                                </Fab>
-                              </>
-                            )
-                          }
+                          {store.getState().auth.role.id === 2 && (
+                            <>
+                              <Fab
+                                size="small"
+                                color="error"
+                                sx={{ marginX: '8px' }}
+                                data-testid={`reject-event-button-${row.id}`}
+                                onClick={() =>
+                                  handleOpenModal(`modal-update-reject-${row.id}`)
+                                }
+                              >
+                                <Close sx={{ color: colors.white.light }} />
+                              </Fab>
+                              <Fab
+                                size="small"
+                                color="success"
+                                sx={{ marginX: '8px' }}
+                                data-testid={`approve-event-button-${row.id}`}
+                                onClick={() =>
+                                  handleOpenModal(`modal-update-approve-${row.id}`)
+                                }
+                              >
+                                <Check sx={{ color: colors.white.light }} />
+                              </Fab>
+                            </>
+                          )}
                         </TableCell>
                       </TableRow>
                     </Fragment>

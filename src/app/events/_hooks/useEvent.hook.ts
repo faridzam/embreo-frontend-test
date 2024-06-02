@@ -1,5 +1,9 @@
 import { apiRequest } from '@/libs/axios/apiRequest'
-import { addEvent, approveEvent, rejectEvent } from '@/libs/redux/features/events/eventSlice'
+import {
+  addEvent,
+  approveEvent,
+  rejectEvent,
+} from '@/libs/redux/features/events/eventSlice'
 import store from '@/libs/redux/store'
 import { Company, UpdateEvent } from '@/types/events'
 import { useState } from 'react'
@@ -43,7 +47,7 @@ const useEvent = () => {
         name: data.name,
         location: data.location,
         vendors: data.vendors,
-        dates: data.dates
+        dates: data.dates,
       })
       if (response.status === 201) {
         dispatch(addEvent(response.data.data))
@@ -58,10 +62,16 @@ const useEvent = () => {
     try {
       const response = await apiRequest.patch('/event/approve', {
         event_id: data.event_id,
-        remarks: data.remarks
+        remarks: data.remarks,
       })
       if (response.status === 200) {
-        dispatch(approveEvent({...response.data.data, id: data.event_id, company_name: store.getState().auth.company.name}))
+        dispatch(
+          approveEvent({
+            ...response.data.data,
+            id: data.event_id,
+            company_name: store.getState().auth.company.name,
+          })
+        )
         setModalOpen({})
       }
     } catch (error) {
@@ -72,10 +82,16 @@ const useEvent = () => {
     try {
       const response = await apiRequest.patch('/event/reject', {
         event_id: data.event_id,
-        remarks: `rejected by ${store.getState().auth.company.name} with : "${data.remarks}"`
+        remarks: `rejected by ${store.getState().auth.company.name} with : "${data.remarks}"`,
       })
       if (response.status === 200) {
-        dispatch(rejectEvent({...response.data.data, id: data.event_id, company_name: store.getState().auth.company.name}))
+        dispatch(
+          rejectEvent({
+            ...response.data.data,
+            id: data.event_id,
+            company_name: store.getState().auth.company.name,
+          })
+        )
         setModalOpen({})
       }
     } catch (error) {

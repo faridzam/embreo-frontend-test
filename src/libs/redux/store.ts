@@ -15,7 +15,7 @@ import { eventReducer } from './features/events/eventSlice'
 
 const reducers = combineReducers({
   auth: authReducer,
-  event: eventReducer
+  event: eventReducer,
 })
 
 const persistedReducer = persistReducer(

@@ -1,6 +1,7 @@
 import Logo from '@/assets/images/logo/logo.svg'
 import { colors } from '@/constants/colors'
-import { MenuRounded, Notifications } from '@mui/icons-material'
+import { logout } from '@/utils/Auth'
+import { Logout, MenuRounded } from '@mui/icons-material'
 import { Box, IconButton, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import CircleImage from '../images/CircleImage'
@@ -40,14 +41,14 @@ const Header = (props: IHeaderProps) => {
       </Grid2>
       <Grid2 xs={3} md={4} xl={4}>
         <Box display={'flex'} justifyContent={'flex-end'} gap={'16px'}>
-          <IconButton>
-            <Notifications sx={{ color: colors.white.light, fontSize: '32px' }} />
-          </IconButton>
           <CircleImage
             src="https://picsum.photos/40.webp"
             alt="account_avatar"
             size="40px"
           />
+          <IconButton onClick={() => logout()}>
+            <Logout sx={{ color: colors.white.light, fontSize: '32px' }} />
+          </IconButton>
         </Box>
       </Grid2>
     </Grid2>

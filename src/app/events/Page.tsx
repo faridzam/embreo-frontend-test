@@ -39,21 +39,19 @@ const EventPage = () => {
         <Typography variant="h4" fontWeight={500}>
           Event List
         </Typography>
-        {
-          store.getState().auth.role.id === 1 && (
-            <Button
-              data-testid="create-event-button"
-              variant="contained"
-              color="primary"
-              startIcon={<Add sx={{ color: colors.white.light, fontSize: '18px' }} />}
-              onClick={() => handleOpenModal('modal-create')}
-            >
-              <Typography variant="button" color={colors.white.light}>
-                Create Event
-              </Typography>
-            </Button>
-          )
-        }
+        {store.getState().auth.role.id === 1 && (
+          <Button
+            data-testid="create-event-button"
+            variant="contained"
+            color="primary"
+            startIcon={<Add sx={{ color: colors.white.light, fontSize: '18px' }} />}
+            onClick={() => handleOpenModal('modal-create')}
+          >
+            <Typography variant="button" color={colors.white.light}>
+              Create Event
+            </Typography>
+          </Button>
+        )}
       </Box>
       <EventTable />
     </Box>

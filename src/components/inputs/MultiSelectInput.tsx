@@ -1,37 +1,34 @@
-import { Company } from '@/types/events';
-import { InputBase, Typography } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useState } from 'react';
+import { Company } from '@/types/events'
+import { InputBase, Typography } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
+import FormControl from '@mui/material/FormControl'
+import ListItemText from '@mui/material/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { useState } from 'react'
 
 interface IMultiSelectProps {
-  label?: string;
-  placeholder?: string;
-  value: string[];
-  options: Company[];
-  onChange: (val: string[]) => void;
+  label?: string
+  placeholder?: string
+  // value: string[]
+  options: Company[]
+  onChange: (val: string[]) => void
 }
 
 export default function MultiSelectInput(params: IMultiSelectProps) {
-  const {
-    label = "", placeholder = "", value, options, onChange
-  } = params
-  const [selected, setSelected] = useState<string[]>([]);
+  const { label = '', placeholder = '', options, onChange } = params
+  const [selected, setSelected] = useState<string[]>([])
 
   const handleChange = (event: SelectChangeEvent<typeof selected>) => {
     const val = event.target.value
 
-    setSelected(typeof val === 'string' ? val.split(',') : val);
+    setSelected(typeof val === 'string' ? val.split(',') : val)
     onChange(typeof val === 'string' ? val.split(',') : val)
-
-  };
+  }
 
   return (
     <FormControl fullWidth>
-      <Typography variant='body1'>{label}</Typography>
+      <Typography variant="body1">{label}</Typography>
       <Select
         placeholder={placeholder}
         multiple
@@ -50,13 +47,16 @@ export default function MultiSelectInput(params: IMultiSelectProps) {
             size="small"
           />
         }
-        renderValue={(selected) => options.map((option) => selected.includes(option.id.toString()) ? option.name : null)
-          .filter((val) => val)
-          .join(', ')}
+        renderValue={selected =>
+          options
+            .map(option => (selected.includes(option.id.toString()) ? option.name : null))
+            .filter(val => val)
+            .join(', ')
+        }
         MenuProps={{
-          sx:{
-            zIndex: '10000 !important'
-          }
+          sx: {
+            zIndex: '10000 !important',
+          },
         }}
         sx={{
           backgroundColor: '#F8F9F9',
@@ -67,7 +67,7 @@ export default function MultiSelectInput(params: IMultiSelectProps) {
           borderRadius: '8px',
         }}
       >
-        {options.map((option) => (
+        {options.map(option => (
           <MenuItem key={`option-${option.id}`} value={option.id.toString()}>
             <Checkbox checked={selected.indexOf(option.id.toString()) > -1} />
             <ListItemText primary={option.name} />
@@ -75,5 +75,5 @@ export default function MultiSelectInput(params: IMultiSelectProps) {
         ))}
       </Select>
     </FormControl>
-  );
+  )
 }

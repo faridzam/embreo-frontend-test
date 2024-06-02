@@ -3,7 +3,7 @@ import { apiRequest } from '@/libs/axios/apiRequest'
 import { lazy } from 'react'
 import { Navigate, RouteObject } from 'react-router-dom'
 
-export default function PrivateRoutes() : RouteObject {
+export default function PrivateRoutes(): RouteObject {
   const EventPage = lazy(() => import('@/app/events/Page'))
   const EventPageError = lazy(() => import('@/app/events/Error'))
   return {

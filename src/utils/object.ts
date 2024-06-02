@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const iterateObject = (obj: any) => {
   Object.keys(obj).forEach(key => {
