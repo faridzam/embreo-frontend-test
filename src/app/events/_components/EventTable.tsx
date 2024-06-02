@@ -49,7 +49,7 @@ const columns: readonly Column[] = [
   { id: 'vendors', label: 'Tagged Vendors', minWidth: 70, align: 'left' },
   { id: 'remarks', label: 'Remarks', minWidth: 100, align: 'left' },
   { id: 'created_at', label: 'Created At', minWidth: 100, align: 'left' },
-  { id: 'action', label: 'Action', minWidth: 130, align: 'left' },
+  { id: 'action', label: 'Action', minWidth: 100, align: 'left' },
 ]
 
 const EventTable = () => {
@@ -233,7 +233,7 @@ const EventTable = () => {
                           <Fab
                             size="small"
                             color="info"
-                            sx={{ marginX: '8px' }}
+                            sx={{ marginX: '4px' }}
                             data-testid={`reject-event-button-${row.id}`}
                             onClick={() => handleOpenModal(`modal-detail-${row.id}`)}
                           >
@@ -244,7 +244,7 @@ const EventTable = () => {
                               <Fab
                                 size="small"
                                 color="error"
-                                sx={{ marginX: '8px' }}
+                                sx={{ marginX: '4px' }}
                                 data-testid={`reject-event-button-${row.id}`}
                                 onClick={() =>
                                   handleOpenModal(`modal-update-reject-${row.id}`)
@@ -255,7 +255,7 @@ const EventTable = () => {
                               <Fab
                                 size="small"
                                 color="success"
-                                sx={{ marginX: '8px' }}
+                                sx={{ marginX: '4px' }}
                                 data-testid={`approve-event-button-${row.id}`}
                                 onClick={() =>
                                   handleOpenModal(`modal-update-approve-${row.id}`)
