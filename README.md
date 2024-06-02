@@ -7,6 +7,7 @@
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Accounts](#accounts)
 
 ## Features
 
@@ -46,3 +47,14 @@ How to install and set up app on local
 - To build the app: `npm run build`
 - To run the app: `npm run preview`
 - To run prettier : `npm run format`
+
+## Accounts
+
+- HR Account
+  - username : company1, password: password
+  - username : company2, password: password
+  - username : company3, password: password
+- Vendor Account
+  - username : company4, password: password
+  - username : company5, password: password
+  - username : company6, password: password
